@@ -19,11 +19,18 @@ export default function CurrentRatesPage() {
 
     const handleCurrencyChange = (currency:string) => {
         setSelectedCurrencies((prevSelected) => {
-            if (prevSelected.includes(currency)) {
-                return prevSelected.filter((cur) => cur !== currency);
-            } else {
-                return [...prevSelected, currency];
+            if (currency === 'all') {
+                if (prevSelected.length === availableCurrencies.length) return [];
+                else return availableCurrencies;
             }
+            else {
+                if (prevSelected.includes(currency)) {
+                    return prevSelected.filter((cur) => cur !== currency);
+                } else {
+                    return [...prevSelected, currency];
+                }
+            }
+            
         });
     };
 
@@ -67,6 +74,11 @@ export default function CurrentRatesPage() {
                             {currency}
                     </label>
                 ))}
+                <label key='all' className="mr-4">
+                <input type="checkbox" value='all' checked={selectedCurrencies.length === availableCurrencies.length} onChange={() => handleCurrencyChange('all')} className="mr-1"/>
+                    Select All / Clear All
+                </label>
+                
             </div>
             
             <button 
